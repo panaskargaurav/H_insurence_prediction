@@ -92,18 +92,6 @@ div.stNumberInput > label { color:#fff !important; font-size:14px; margin-bottom
 .result b { font-size: 20px; color: #f1eaff; }
 .result .premium { font-size: 26px; font-weight: bold; color: #ffd700; }
 
-/* Info card */
-.info-card {
-    background: rgba(58, 47, 92, 0.95);
-    border-radius:16px;
-    padding:20px;
-    margin-top:15px;
-    font-size:15px;         
-    line-height:1.7;
-    box-shadow:0 0 12px rgba(191, 170, 255,0.6);
-    animation: fadeIn 1s ease-in-out;
-}
-
 /* BMI Card */
 .bmi-card {
     background: rgba(58, 47, 92, 0.95);
@@ -142,7 +130,6 @@ div.stNumberInput > label { color:#fff !important; font-size:14px; margin-bottom
 }
 .footer h3 { color:#ffd700; margin-bottom:10px; }
 .footer ul { margin-left:20px; }
-.footer img { width:100%; max-width:600px; border-radius:10px; margin-top:10px; }
 
 /* Button */
 .stButton>button { background-color:#5e3da1; color:#fff; padding:8px 12px; font-size:14px; border-radius:8px; border:none; width:100%; transition:0.3s; }
@@ -230,6 +217,7 @@ with tab1:
         category, bmi_advice_text, color = bmi_category_advice(bmi)
         smoke_msg = smoking_advice(smoker)
 
+        # Display result
         result_placeholder.markdown(f"""
         <div class="result" style="border:2px solid {color}; box-shadow:0 0 18px {color}; background: rgba(58, 47, 92, 0.95);">
             💰 <b>Predicted Premium:</b> <span class="premium">₹ {yp}</span><br>
@@ -239,10 +227,21 @@ with tab1:
         </div>
         """, unsafe_allow_html=True)
 
+        # Display prediction counter
         counter_placeholder.markdown(f"""
         <div style="text-align:center; margin-top:20px; font-size:18px; font-weight:bold; color:white;">
             🔢 Total Predictions Made: {st.session_state['prediction_count']}
         </div>
+        """, unsafe_allow_html=True)
+
+        # --- Auto-scroll to result ---
+        st.markdown(f"""
+        <script>
+            const result = window.document.querySelector('.result');
+            if (result) {{
+                result.scrollIntoView({{behavior: 'smooth', block: 'start'}});
+            }}
+        </script>
         """, unsafe_allow_html=True)
 
 # --- BMI Calculator Tab ---
