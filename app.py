@@ -186,43 +186,79 @@ def smoking_advice(smoker):
 if 'prediction_count' not in st.session_state:
     st.session_state['prediction_count'] = 0
 
-# --- Layout ---
-col_form, col_result = st.columns([1,1])
+# --- Tabs ---
+tab1, tab2 = st.tabs(["💼 Premium Predictor", "📐 BMI Calculator"])
 
-with col_form:
-    st.markdown('<div class="card">', unsafe_allow_html=True)
+# --- Premium Predictor Tab ---
+with tab1:
+    col_form, col_result = st.columns([1,1])
 
-    # Main Inputs
-    c1, c2 = st.columns(2)
-    with c1:
-        age = st.number_input('🧑 Age', min_value=1, max_value=120, step=1)
-    with c2:
-        bmi = st.number_input('⚖️ BMI', min_value=10.0, max_value=60.0, step=0.1)
+    with col_form:
+        st.markdown('<div class="card">', unsafe_allow_html=True)
 
-    children = st.number_input('👶 Children', min_value=0, max_value=10, step=1)
+        # Main Inputs
+        c1, c2 = st.columns(2)
+        with c1:
+            age = st.number_input('🧑 Age', min_value=1, max_value=120, step=1)
+        with c2:
+            bmi = st.number_input('⚖️ BMI', min_value=10.0, max_value=60.0, step=0.1)
 
-    col_gen, col_smoke = st.columns(2)
-    with col_gen:
-        gender = st.radio('⚧ Gender:', ('Male', 'Female'))
-    with col_smoke:
-        smoker = st.radio('🚬 Do You Smoke?:', ('No', 'Yes'))
+        children = st.number_input('👶 Children', min_value=0, max_value=10, step=1)
 
-    predict_clicked = st.button('💡 Predict Premium', use_container_width=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+        col_gen, col_smoke = st.columns(2)
+        with col_gen:
+            gender = st.radio('⚧ Gender:', ('Male', 'Female'))
+        with col_smoke:
+            smoker = st.radio('🚬 Do You Smoke?:', ('No', 'Yes'))
 
-    # --- BMI Card ---
+        predict_clicked = st.button('💡 Predict Premium', use_container_width=True)
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    with col_result:
+        result_placeholder = st.empty()
+        counter_placeholder = st.empty()
+
+    # --- Prediction & Display ---
+    if predict_clicked:
+        st.session_state['prediction_count'] += 1
+
+        gender_val = 0 if gender.upper() == 'MALE' else 1
+        smoker_val = 0 if smoker.upper() == 'NO' else 1
+        X_test = [[age, bmi, children, gender_val, smoker_val]]
+        yp = str(round(model.predict(X_test)[0],2))
+
+        category, bmi_advice_text, color = bmi_category_advice(bmi)
+        smoke_msg = smoking_advice(smoker)
+
+        result_placeholder.markdown(f"""
+        <div class="result" style="border:2px solid {color}; box-shadow:0 0 18px {color}; background: rgba(58, 47, 92, 0.95);">
+            💰 <b>Predicted Premium:</b> <span class="premium">₹ {yp}</span><br>
+            📊 <b>BMI Category:</b> {category}<br>
+            🩺 <b>BMI Advice:</b> {bmi_advice_text}<br>
+            🚬 <b>Smoking Advice:</b> {smoke_msg}
+        </div>
+        """, unsafe_allow_html=True)
+
+        counter_placeholder.markdown(f"""
+        <div style="text-align:center; margin-top:20px; font-size:18px; font-weight:bold; color:white;">
+            🔢 Total Predictions Made: {st.session_state['prediction_count']}
+        </div>
+        """, unsafe_allow_html=True)
+
+# --- BMI Calculator Tab ---
+with tab2:
     st.markdown('<div class="bmi-card">', unsafe_allow_html=True)
     st.markdown("<h4>📐 BMI Calculator</h4>", unsafe_allow_html=True)
 
     cc1, cc2 = st.columns(2)
     with cc1:
-        calc_height = st.number_input("📏 Height (cm)", min_value=50.0, max_value=250.0, step=0.5, key="calc_h")
-        calc_age = st.number_input("🎂 Age (years)", min_value=1, max_value=120, step=1, key="calc_age")
+        calc_height = st.number_input("📏 Height (cm)", min_value=50.0, max_value=250.0, step=0.5, key="calc_h_tab")
+        calc_age = st.number_input("🎂 Age (years)", min_value=1, max_value=120, step=1, key="calc_age_tab")
     with cc2:
-        calc_weight = st.number_input("⚖️ Weight (kg)", min_value=10.0, max_value=300.0, step=0.5, key="calc_w")
-        calc_gender = st.radio("⚧ Gender", ["Male","Female"], key="calc_gen")
+        calc_weight = st.number_input("⚖️ Weight (kg)", min_value=10.0, max_value=300.0, step=0.5, key="calc_w_tab")
+        calc_gender = st.radio("⚧ Gender", ["Male","Female"], key="calc_gen_tab")
 
-    if st.button("📊 Calculate BMI", use_container_width=True, key="calc_bmi_btn"):
+    if st.button("📊 Calculate BMI", use_container_width=True, key="calc_bmi_btn_tab"):
         if calc_height > 0:
             bmi_val = round(calc_weight / ((calc_height/100)**2), 2)
             if bmi_val < 18.5:
@@ -237,38 +273,6 @@ with col_form:
             st.markdown(f'<div class="bmi-result-box">Your BMI: {bmi_val} <br>Category: {category}</div>', unsafe_allow_html=True)
 
     st.markdown('</div>', unsafe_allow_html=True)
-
-with col_result:
-    result_placeholder = st.empty()
-    info_placeholder = st.empty()
-    counter_placeholder = st.empty()
-
-# --- Prediction & Display ---
-if predict_clicked:
-    st.session_state['prediction_count'] += 1
-
-    gender_val = 0 if gender.upper() == 'MALE' else 1
-    smoker_val = 0 if smoker.upper() == 'NO' else 1
-    X_test = [[age, bmi, children, gender_val, smoker_val]]
-    yp = str(round(model.predict(X_test)[0],2))
-
-    category, bmi_advice_text, color = bmi_category_advice(bmi)
-    smoke_msg = smoking_advice(smoker)
-
-    result_placeholder.markdown(f"""
-    <div class="result" style="border:2px solid {color}; box-shadow:0 0 18px {color}; background: rgba(58, 47, 92, 0.95);">
-        💰 <b>Predicted Premium:</b> <span class="premium">₹ {yp}</span><br>
-        📊 <b>BMI Category:</b> {category}<br>
-        🩺 <b>BMI Advice:</b> {bmi_advice_text}<br>
-        🚬 <b>Smoking Advice:</b> {smoke_msg}
-    </div>
-    """, unsafe_allow_html=True)
-
-    counter_placeholder.markdown(f"""
-    <div style="text-align:center; margin-top:20px; font-size:18px; font-weight:bold; color:white;">
-        🔢 Total Predictions Made: {st.session_state['prediction_count']}
-    </div>
-    """, unsafe_allow_html=True)
 
 # --- Footer with Elevate Health Insurance Info ---
 st.markdown("""
@@ -288,7 +292,5 @@ st.markdown("""
 <li>Cashless OPD services like ordering medicines, booking lab tests, etc. (with additional premium)</li>
 <li>Cashless hospitalisation worldwideGY</li>
 </ul>
-
-
-
+</div>
 """, unsafe_allow_html=True)
