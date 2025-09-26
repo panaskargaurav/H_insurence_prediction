@@ -154,14 +154,14 @@ div.stNumberInput > label { color:#fff !important; font-size:14px; margin-bottom
 
 # --- Floating Glassy Emoji Bubbles ---
 st.markdown("""
-<div class="emoji-bubble">🩺</div>
-<div class="emoji-bubble">💊</div>
-<div class="emoji-bubble">🏥</div>
-<div class="emoji-bubble">❤️</div>
-<div class="emoji-bubble">🩹</div>
-<div class="emoji-bubble">🧬</div>
-<div class="emoji-bubble">🥼</div>
-<div class="emoji-bubble">🦠</div>
+<div class="emoji-bubble"></div>
+<div class="emoji-bubble"></div>
+<div class="emoji-bubble"></div>
+<div class="emoji-bubble"></div>
+<div class="emoji-bubble"></div>
+<div class="emoji-bubble"></div>
+<div class="emoji-bubble"></div>
+<div class="emoji-bubble"></div>
 """, unsafe_allow_html=True)
 
 # --- Header ---
@@ -299,3 +299,4 @@ st.markdown("""
 </ul>
 </div>
 """, unsafe_allow_html=True)
+
