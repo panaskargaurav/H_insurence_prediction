@@ -221,11 +221,16 @@ with tab1:
     # --- Prediction & Display ---
     if predict_clicked:
         st.session_state['prediction_count'] += 1
-
+        
         gender_val = 0 if gender.upper() == 'MALE' else 1
         smoker_val = 0 if smoker.upper() == 'NO' else 1
         X_test = [[age, bmi, children, gender_val, smoker_val]]
-        yp = str(round(model.predict(X_test)[0],2))
+
+        # Predict premium and ensure minimum value of 2000
+        predicted_value = model.predict(X_test)[0]
+        if predicted_value < 1000:
+            predicted_value = 1000
+        yp = str(round(predicted_value, 2))
 
         category, bmi_advice_text, color = bmi_category_advice(bmi)
         smoke_msg = smoking_advice(smoker)
@@ -274,7 +279,7 @@ with tab2:
 
     st.markdown('</div>', unsafe_allow_html=True)
 
-# --- Footer with Elevate Health Insurance Info ---
+# --- Footer ---
 st.markdown("""
 <div class="footer">
 <h3>Top reasons to buy Elevate health insurance</h3>
