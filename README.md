@@ -18,7 +18,18 @@ It also includes a **BMI calculator** with health advice and floating animated e
 - Premium look with gradient background, glassy cards, and floating effects.
 
 ---
+## screenshots
+normal:-
+<img width="1881" height="832" alt="image" src="https://github.com/user-attachments/assets/abfbf52b-1beb-4d56-8a10-b15b74e3c9c3" />
 
+overweight:-
+<img width="1876" height="848" alt="image" src="https://github.com/user-attachments/assets/af1f52f5-6ce0-4ac6-a1b2-19d27fc71c58" />
+
+underweight and smoker :-
+<img width="1862" height="841" alt="image" src="https://github.com/user-attachments/assets/ac134930-3006-41ec-b34a-57f043a80283" />
+
+BMI(Body Mass Index) Calculator:-
+<img width="1870" height="852" alt="image" src="https://github.com/user-attachments/assets/b1a930e4-5c04-46c2-9394-775d1c497a46" />
 
 ## 🛠 Installation
 
@@ -113,6 +124,6 @@ pandas
 numpy
 (Add any other libraries you used for training your model.pkl.)
 
-## Screen shots 
+ 
 
 
