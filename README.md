@@ -29,14 +29,14 @@ cd health-insurance-predictor
 Create a virtual environment (optional but recommended)
 
 ## bash
-Copy code
+
 python -m venv venv
 source venv/bin/activate  # Linux / macOS
 venv\Scripts\activate     # Windows
 Install dependencies
 
 # bash
-Copy code
+
 pip install -r requirements.txt
 Make sure you have streamlit and scikit-learn installed.
 
@@ -44,7 +44,7 @@ Make sure you have streamlit and scikit-learn installed.
 Run the Streamlit app:
 
 bash
-Copy code
+
 streamlit run app.py
 Open the link displayed in your terminal (usually http://localhost:8501) in a web browser.
 
