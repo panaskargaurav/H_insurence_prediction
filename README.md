@@ -24,7 +24,7 @@ It also includes a **BMI calculator** with health advice and floating animated e
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/yourusername/health-insurance-predictor.git
+git clone https://github.com/panaskargaurav/H_insurence_prediction
 cd health-insurance-predictor
 Create a virtual environment (optional but recommended)
 
