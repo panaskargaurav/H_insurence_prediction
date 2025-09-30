@@ -28,14 +28,14 @@ git clone https://github.com/panaskargaurav/H_insurence_prediction
 cd health-insurance-predictor
 Create a virtual environment (optional but recommended)
 
-## bash
+# 2
 
 python -m venv venv
 source venv/bin/activate  # Linux / macOS
 venv\Scripts\activate     # Windows
 Install dependencies
 
-# bash
+# 3
 
 pip install -r requirements.txt
 Make sure you have streamlit and scikit-learn installed.
@@ -43,7 +43,7 @@ Make sure you have streamlit and scikit-learn installed.
 ## 🖥 Usage
 Run the Streamlit app:
 
-bash
+
 
 streamlit run app.py
 Open the link displayed in your terminal (usually http://localhost:8501) in a web browser.
@@ -60,7 +60,7 @@ Enter Height, Weight, Age, and Gender.
 
 Click Calculate BMI to see your BMI value and category.
 
-📊 Example Output
+# 📊 Example Output
 Premium Predictor Result:
 
 Predicted Premium: ₹ 4500
@@ -77,7 +77,7 @@ BMI: 23.4
 
 Category: ✅ Normal
 
-🎨 UI/UX
+# 🎨 UI/UX
 Gradient animated background.
 
 Glassy emoji bubbles floating in different directions.
@@ -86,22 +86,19 @@ Card-style input and result layout.
 
 Footer with detailed insurance benefits.
 
-⚡ Notes
+# ⚡ Notes
 Minimum predicted premium is capped at ₹1000 to avoid unrealistic predictions.
 
 Model predictions depend on the model.pkl file, ensure it is present in the repo.
 
 All user sessions track the number of predictions made.
 
-📂 File Structure
+# 📂 File Structure
 
-health-insurance-predictor/
-│
-├─ app.py           # Main Streamlit app
-├─ model.pkl        # Trained model file
-├─ requirements.txt # Python dependencies
-└─ README.md        # Project description
-📦 requirements.txt
+<img width="740" height="225" alt="image" src="https://github.com/user-attachments/assets/68e641ca-f9a6-4df3-849c-67a135a6bae6" />
+
+
+# 📦 requirements.txt
 Here’s a basic requirements.txt you can include:
 
 nginx
